@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { validationData } from "../utils/Validation";
@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const navigate = useNavigate();
+  const [errorMsg, setErrorMsg] = useState("");
 
   type LoginForm = {
     name: string;
@@ -16,6 +17,7 @@ const Login = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<LoginForm>({
     mode: "onChange",
@@ -29,11 +31,21 @@ const Login = () => {
     // 仮にユーザID：「root」、パスワード：「123456」でログイン成功とする
     if (data.name === "root" && data.password === "123456") {
       navigate("/Success");
+    } else {
+      // ログイン失敗
+      setErrorMsg("ユーザIDもしくはパスワードが間違ってます!");
     }
+
+    reset();
+  };
+
+  const handleClear = () => {
+    reset();
   };
 
   return (
     <div className="form-container">
+      <p className="errorMsg">{errorMsg}</p>
       <h1>Login Form</h1>
       <form onSubmit={handleSubmit(handleLogin)}>
         <label htmlFor="userID">ユーザーID</label>
@@ -45,7 +57,7 @@ const Login = () => {
         <p>{errors.password?.message}</p>
 
         <button type="submit">ログイン</button>
-        <button>クリア</button>
+        <button onClick={handleClear}>クリア</button>
       </form>
     </div>
   );
