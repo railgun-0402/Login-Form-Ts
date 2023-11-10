@@ -30,6 +30,8 @@
 ## TODO
 #### UT
 
+→Done
+
 ### deploy
 ・AWS EC2 or Amplify
 
