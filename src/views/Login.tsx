@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { validationData } from "../utils/Validation";
 import { useNavigate } from "react-router-dom";
 
-const Login = () => {
+export const Login = () => {
   const navigate = useNavigate();
   const [errorMsg, setErrorMsg] = useState("");
 
